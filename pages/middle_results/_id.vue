@@ -17,7 +17,6 @@
 <script>
 import Card from '~/components/Card.vue'
 import {mapState} from 'vuex'
-import axios from "axios";
 
 export default {
   name: "id",
@@ -28,18 +27,14 @@ export default {
     getSearch() {
       return this.$route.params.id
     },
+    ...mapState({albumData: 'albums'})
   },
   methods: {
     picker(index) {
       return index % 2 == 0 ? 'red' : 'blue';
     }
   },
-  asyncData({params}) {
-    return axios.get(`https://itunes.apple.com/search?term=${params.id}&entity=album`)
-      .then(function (response) {
-        return {albumData: response.data.results}
-      })
-  }
+  middleware: 'search'
 }
 </script>
 
